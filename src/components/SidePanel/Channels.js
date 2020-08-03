@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 
+import firebase from "../../firebase";
+
 export class Channels extends Component {
     state = {
+        user: this.props.currentUser,
         channels: [],
         modal: false,
         channelName: "",
         channelDetails: "",
+        channelsRef: firebase.database().ref("channels"),
     };
 
     // closeModal = () => this.setState({ modal: false });
@@ -15,6 +19,45 @@ export class Channels extends Component {
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        if (this.isFormValid(this.state)) {
+            this.addChannel();
+        }
+    };
+
+    isFormValid = ({ channelName, channelDetails }) =>
+        channelName && channelDetails;
+
+    addChannel = () => {
+        const { channelsRef, channelName, channelDetails, user } = this.state;
+
+        const key = channelsRef.push().key;
+
+        const newChannel = {
+            id: key,
+            name: channelName,
+            details: channelDetails,
+            createdBy: {
+                name: user.displayName,
+                avatar: user.photoURL,
+            },
+        };
+
+        channelsRef
+            .child(key)
+            .update(newChannel)
+            .then(() => {
+                this.setState({ channelName: "", channelDetails: "" });
+                this.toggleModal();
+
+                console.log("channel added");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     render() {
@@ -38,7 +81,7 @@ export class Channels extends Component {
                 <Modal basic open={modal} onClose={this.toggleModal}>
                     <Modal.Header>Add a Channel</Modal.Header>
                     <Modal.Content>
-                        <Form>
+                        <Form onSubmit={this.handleSubmit}>
                             <Form.Field>
                                 <Input
                                     fluid
@@ -60,7 +103,11 @@ export class Channels extends Component {
                     </Modal.Content>
 
                     <Modal.Actions>
-                        <Button color="green" inverted>
+                        <Button
+                            color="green"
+                            inverted
+                            onClick={this.handleSubmit}
+                        >
                             <Icon name="checkmark" /> Add
                         </Button>
 
