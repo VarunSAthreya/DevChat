@@ -176,7 +176,7 @@ export class Channels extends Component {
                         </Button>
 
                         <Button color="red" inverted onClick={this.toggleModal}>
-                            <Icon name="checkmark" /> Cancel
+                            <Icon name="close" /> Cancel
                         </Button>
                     </Modal.Actions>
                 </Modal>
