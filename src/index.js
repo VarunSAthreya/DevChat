@@ -42,7 +42,7 @@ class Root extends React.Component {
 
     render() {
         return this.props.isLoading ? (
-            <Spinner />
+            <Spinner content="Preparing Chat..." size="huge" />
         ) : (
             <Switch>
                 <Route path="/" exact component={App} />

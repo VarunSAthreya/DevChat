@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setCurrentChannel } from "../../actions";
 
 import firebase from "../../firebase";
+import Spinner from "../../Spinner";
 
 export class Channels extends Component {
     state = {
@@ -105,8 +106,7 @@ export class Channels extends Component {
     };
 
     displayChannels = (channels) => {
-        return (
-            channels.length > 0 &&
+        return channels.length > 0 ? (
             channels.map((channel) => {
                 return (
                     <Menu.Item
@@ -119,6 +119,8 @@ export class Channels extends Component {
                     </Menu.Item>
                 );
             })
+        ) : (
+            <Spinner content="Loading Channels..." size="medium" />
         );
     };
 
