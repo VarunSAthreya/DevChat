@@ -111,7 +111,7 @@ export class Channels extends Component {
                 return (
                     <Menu.Item
                         key={channel.id}
-                        onClick={() => console.log(channel)}
+                        onClick={() => this.changeChannel(channel)}
                         name={channel.name}
                         style={{ opacity: 0.7 }}
                     >
