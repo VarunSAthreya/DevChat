@@ -5,6 +5,7 @@ import MessagesHeader from "./MessagesHeader";
 import MessagesForm from "./MessagesForm";
 import firebase from "../../firebase";
 import Message from "./Message";
+import Spinner from "../../Spinner";
 
 export class Messages extends Component {
     state = {
@@ -39,8 +40,7 @@ export class Messages extends Component {
     };
 
     displayMessages = (messages = []) => {
-        return (
-            messages.length > 0 &&
+        return messages.length > 0 ? (
             messages.map((message) => (
                 <Message
                     key={message.timestamp}
@@ -48,6 +48,8 @@ export class Messages extends Component {
                     user={this.state.user}
                 />
             ))
+        ) : (
+            <Spinner content="Fetching Messages" size="medium" />
         );
     };
 
