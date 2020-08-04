@@ -4,16 +4,55 @@ import { Segment, Comment } from "semantic-ui-react";
 import MessagesHeader from "./MessagesHeader";
 import MessagesForm from "./MessagesForm";
 import firebase from "../../firebase";
+import Message from "./Message";
 
 export class Messages extends Component {
     state = {
         messagesRef: firebase.database().ref("messages"),
+        messages: [],
+        messagesLoading: true,
         channel: this.props.currentChannel,
         user: this.props.currentUser,
     };
 
+    componentWillMount() {
+        const { channel, user } = this.state;
+
+        if (channel && user) {
+            this.addListners(channel.id);
+        }
+    }
+
+    addListners = (channelId) => {
+        this.addMessageListner(channelId);
+    };
+
+    addMessageListner = (channelId) => {
+        let loadedMessages = [];
+        this.state.messagesRef.child(channelId).on("child_added", (snap) => {
+            loadedMessages.push(snap.val());
+            this.setState({
+                messages: loadedMessages,
+                messagesLoading: false,
+            });
+        });
+    };
+
+    displayMessages = (messages = []) => {
+        return (
+            messages.length > 0 &&
+            messages.map((message) => (
+                <Message
+                    key={message.timestamp}
+                    message={message}
+                    user={this.state.user}
+                />
+            ))
+        );
+    };
+
     render() {
-        const { messagesRef, channel, user } = this.state;
+        const { messagesRef, messages, channel, user } = this.state;
 
         return (
             <React.Fragment>
@@ -21,7 +60,7 @@ export class Messages extends Component {
 
                 <Segment>
                     <Comment.Group className="messages">
-                        {/* Messages */}
+                        {this.displayMessages(messages)}
                     </Comment.Group>
                 </Segment>
 
