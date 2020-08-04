@@ -104,21 +104,23 @@ export class Channels extends Component {
         this.setState({ activeChannel: channel.id });
     };
 
-    // displayChannels = (channels) => {
-    //     channels.length > 0 &&
-    //         channels.map((channel) => {
-    //             return (
-    //                 <Menu.Item
-    //                     key={channel.id}
-    //                     onClick={() => console.log(channel)}
-    //                     name={channel.name}
-    //                     style={{ opacity: 0.7 }}
-    //                 >
-    //                     asd
-    //                 </Menu.Item>
-    //             );
-    //         });
-    // };
+    displayChannels = (channels) => {
+        return (
+            channels.length > 0 &&
+            channels.map((channel) => {
+                return (
+                    <Menu.Item
+                        key={channel.id}
+                        onClick={() => console.log(channel)}
+                        name={channel.name}
+                        style={{ opacity: 0.7 }}
+                    >
+                        # {channel.name}
+                    </Menu.Item>
+                );
+            })
+        );
+    };
 
     render() {
         const { channels, modal } = this.state;
@@ -135,24 +137,7 @@ export class Channels extends Component {
                     </Menu.Item>
                     {/* Channels */}
 
-                    {/* {this.displayChannels(channels)} */}
-
-                    {channels.length > 0 &&
-                        channels.map((channel) => {
-                            return (
-                                <Menu.Item
-                                    key={channel.id}
-                                    onClick={() => this.changeChannel(channel)}
-                                    name={channel.name}
-                                    style={{ opacity: 0.7 }}
-                                    active={
-                                        channel.id === this.state.activeChannel
-                                    }
-                                >
-                                    # {channel.name}
-                                </Menu.Item>
-                            );
-                        })}
+                    {this.displayChannels(channels)}
                 </Menu.Menu>
 
                 {/* Add Channel Modal */}
