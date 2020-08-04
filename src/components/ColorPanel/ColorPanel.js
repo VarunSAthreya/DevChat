@@ -13,7 +13,12 @@ export class ColorPanel extends Component {
                 width="very thin"
             >
                 <Divider>
-                    <Button icon="add" size="small" color="blue" />
+                    <Button
+                        icon="add"
+                        size="small"
+                        style={{ height: "2.5rem" }}
+                        color="blue"
+                    />
                 </Divider>
             </Sidebar>
         );
