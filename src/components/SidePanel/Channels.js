@@ -13,6 +13,18 @@ export class Channels extends Component {
         channelsRef: firebase.database().ref("channels"),
     };
 
+    componentDidMount() {
+        this.addListners();
+    }
+
+    addListners = () => {
+        let loadedChannels = [];
+        this.state.channelsRef.on("child_added", (snap) => {
+            loadedChannels.push(snap.val());
+            this.setState({ channels: loadedChannels });
+        });
+    };
+
     // closeModal = () => this.setState({ modal: false });
     // openModal = () => this.setState({ modal: true });
     toggleModal = () => this.setState({ modal: !this.state.modal });
@@ -60,6 +72,22 @@ export class Channels extends Component {
             });
     };
 
+    // displayChannels = (channels) => {
+    //     channels.length > 0 &&
+    //         channels.map((channel) => {
+    //             return (
+    //                 <Menu.Item
+    //                     key={channel.id}
+    //                     onClick={() => console.log(channel)}
+    //                     name={channel.name}
+    //                     style={{ opacity: 0.7 }}
+    //                 >
+    //                     asd
+    //                 </Menu.Item>
+    //             );
+    //         });
+    // };
+
     render() {
         const { channels, modal } = this.state;
 
@@ -74,6 +102,22 @@ export class Channels extends Component {
                         <Icon name="add" onClick={this.toggleModal} />
                     </Menu.Item>
                     {/* Channels */}
+
+                    {/* {this.displayChannels(channels)} */}
+
+                    {channels.length > 0 &&
+                        channels.map((channel) => {
+                            return (
+                                <Menu.Item
+                                    key={channel.id}
+                                    onClick={() => console.log(channel)}
+                                    name={channel.name}
+                                    style={{ opacity: 0.7 }}
+                                >
+                                    # {channel.name}
+                                </Menu.Item>
+                            );
+                        })}
                 </Menu.Menu>
 
                 {/* Add Channel Modal */}
