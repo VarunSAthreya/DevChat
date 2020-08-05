@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import firebase from "../../firebase";
 import FileModal from "./FileModal";
+import ProgressBar from "./ProgressBar";
 
 export class MessagesForm extends Component {
     state = {
@@ -141,7 +142,14 @@ export class MessagesForm extends Component {
     };
 
     render() {
-        const { errors, message, loading, modal } = this.state;
+        const {
+            errors,
+            message,
+            loading,
+            modal,
+            uploadState,
+            percentUploaded,
+        } = this.state;
 
         return (
             <Segment className="message__form">
@@ -184,6 +192,10 @@ export class MessagesForm extends Component {
                     modal={modal}
                     closeModal={this.toggleModal}
                     uploadFile={this.uploadFile}
+                />
+                <ProgressBar
+                    uploadState={uploadState}
+                    percentUploaded={percentUploaded}
                 />
             </Segment>
         );
