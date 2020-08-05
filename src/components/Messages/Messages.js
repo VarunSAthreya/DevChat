@@ -6,6 +6,7 @@ import MessagesForm from "./MessagesForm";
 import firebase from "../../firebase";
 import Message from "./Message";
 import Spinner from "../../Spinner";
+import ProgressBar from "./ProgressBar";
 
 export class Messages extends Component {
     state = {
@@ -14,6 +15,7 @@ export class Messages extends Component {
         messagesLoading: true,
         channel: this.props.currentChannel,
         user: this.props.currentUser,
+        progressBar: false,
     };
 
     componentWillMount() {
@@ -50,19 +52,34 @@ export class Messages extends Component {
             ))
         ) : (
             <Spinner content="Fetching Messages..." size="medium" />
-            
         );
     };
 
+    isProgressBarVisible = (percent) => {
+        if (percent > 0) {
+            this.setState({ progressBar: true });
+        }
+    };
+
     render() {
-        const { messagesRef, messages, channel, user } = this.state;
+        const {
+            messagesRef,
+            messages,
+            channel,
+            user,
+            progressBar,
+        } = this.state;
 
         return (
             <React.Fragment>
                 <MessagesHeader />
 
                 <Segment>
-                    <Comment.Group className="messages">
+                    <Comment.Group
+                        className={
+                            progressBar ? "messages__progress" : "messages"
+                        }
+                    >
                         {this.displayMessages(messages)}
                     </Comment.Group>
                 </Segment>
@@ -71,6 +88,7 @@ export class Messages extends Component {
                     messagesRef={messagesRef}
                     currentChannel={channel}
                     currentUser={user}
+                    isProgressBarVisible={this.isProgressBarVisible}
                 />
             </React.Fragment>
         );
