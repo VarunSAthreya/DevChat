@@ -62,6 +62,10 @@ export class MessagesForm extends Component {
         return message;
     };
 
+    uploadFile = (file, metaData) => {
+        console.log(file, metaData);
+    };
+
     render() {
         const { errors, message, loading, modal } = this.state;
 
@@ -102,7 +106,11 @@ export class MessagesForm extends Component {
                         icon="cloud upload"
                     />
                 </Button.Group>
-                <FileModal modal={modal} closeModal={this.toggleModal} />
+                <FileModal
+                    modal={modal}
+                    closeModal={this.toggleModal}
+                    uploadFile={this.uploadFile}
+                />
             </Segment>
         );
     }
