@@ -49,7 +49,8 @@ export class Messages extends Component {
                 />
             ))
         ) : (
-            <Spinner content="Fetching Messages" size="medium" />
+            <Spinner content="Fetching Messages..." size="medium" />
+            
         );
     };
 
