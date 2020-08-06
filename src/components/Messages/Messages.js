@@ -84,7 +84,8 @@ class Messages extends Component {
     };
 
     displayMessages = (messages = []) => {
-        return messages.length > 0 ? (
+        return (
+            messages.length > 0 &&
             messages.map((message) => (
                 <Message
                     key={message.timestamp}
@@ -92,9 +93,10 @@ class Messages extends Component {
                     user={this.state.user}
                 />
             ))
-        ) : (
-            <Spinner content="Fetching Messages..." size="medium" />
         );
+        // : (
+        //     <Spinner content="Fetching Messages..." size="medium" />
+        // );
     };
 
     isProgressBarVisible = (percent) => {
