@@ -3,7 +3,12 @@ import { Header, Segment, Input, Icon } from "semantic-ui-react";
 
 export class MessagesHeader extends Component {
     render() {
-        const { channelName, numUniqueUsers, handelSearchChange } = this.props;
+        const {
+            channelName,
+            numUniqueUsers,
+            handelSearchChange,
+            searchLoading,
+        } = this.props;
 
         return (
             <Segment clearing>
@@ -24,8 +29,9 @@ export class MessagesHeader extends Component {
 
                 <Header floated="right">
                     <Input
-                        size="mini"
+                        loading={searchLoading}
                         onChange={handelSearchChange}
+                        size="mini"
                         icon="search"
                         name="searchTerm"
                         placeholder="Search Messages"

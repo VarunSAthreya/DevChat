@@ -68,6 +68,7 @@ class Messages extends Component {
             return acc;
         }, []);
         this.setState({ searchResult });
+        setTimeout(() => this.setState({ searchLoading: false }), 1000);
     };
 
     countUniqueUsers = (messages) => {
@@ -114,6 +115,7 @@ class Messages extends Component {
             numUniqueUsers,
             searchTerm,
             searchResult,
+            searchLoading,
         } = this.state;
 
         return (
@@ -122,6 +124,7 @@ class Messages extends Component {
                     channelName={this.displayChannelName(channel)}
                     numUniqueUsers={numUniqueUsers}
                     handelSearchChange={this.handelSearchChange}
+                    searchLoading={searchLoading}
                 />
 
                 <Segment>
