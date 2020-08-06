@@ -6,7 +6,6 @@ import MessagesForm from "./MessagesForm";
 import firebase from "../../firebase";
 import Message from "./Message";
 import Spinner from "../../Spinner";
-import ProgressBar from "./ProgressBar";
 
 export class Messages extends Component {
     state = {
