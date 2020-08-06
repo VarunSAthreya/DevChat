@@ -7,7 +7,7 @@ import firebase from "../../firebase";
 import Message from "./Message";
 import Spinner from "../../Spinner";
 
-export class Messages extends Component {
+class Messages extends Component {
     state = {
         messagesRef: firebase.database().ref("messages"),
         messages: [],
@@ -16,6 +16,9 @@ export class Messages extends Component {
         user: this.props.currentUser,
         progressBar: false,
         numUniqueUsers: "",
+        searchTerm: "",
+        searchLoading: false,
+        searchResult: [],
     };
 
     componentWillMount() {
@@ -40,6 +43,28 @@ export class Messages extends Component {
             });
             this.countUniqueUsers(loadedMessages);
         });
+    };
+
+    handelSearchChange = (event) => {
+        this.setState(
+            {
+                searchTerm: event.target.value,
+                searchLoading: true,
+            },
+            () => this.handelSearchMesssages()
+        );
+    };
+
+    handelSearchMesssages = () => {
+        const channelMessages = [...this.state.messages];
+        const regex = new RegExp(this.state.searchTerm, "gi");
+        const searchResult = channelMessages.reduce((acc, message) => {
+            if (message.content && message.content.match(regex)) {
+                acc.push(message);
+            }
+            return acc;
+        }, []);
+        this.setState({ searchResult });
     };
 
     countUniqueUsers = (messages) => {
@@ -84,6 +109,8 @@ export class Messages extends Component {
             user,
             progressBar,
             numUniqueUsers,
+            searchTerm,
+            searchResult,
         } = this.state;
 
         return (
@@ -91,6 +118,7 @@ export class Messages extends Component {
                 <MessagesHeader
                     channelName={this.displayChannelName(channel)}
                     numUniqueUsers={numUniqueUsers}
+                    handelSearchChange={this.handelSearchChange}
                 />
 
                 <Segment>
@@ -99,7 +127,9 @@ export class Messages extends Component {
                             progressBar ? "messages__progress" : "messages"
                         }
                     >
-                        {this.displayMessages(messages)}
+                        {searchTerm
+                            ? this.displayMessages(searchResult)
+                            : this.displayMessages(messages)}
                     </Comment.Group>
                 </Segment>
 
