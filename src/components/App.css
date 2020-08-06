@@ -47,3 +47,8 @@ body,
 .progress__bar {
     margin: 0.3rem 0 0 0 !important;
 }
+
+/* SidePanel.js */
+.menu {
+    padding-bottom: 2em;
+}
