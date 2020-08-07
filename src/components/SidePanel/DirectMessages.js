@@ -7,7 +7,7 @@ import { setCurrentChannel, setPrivateChannel } from "../../actions";
 
 class DirectMessages extends Component {
     state = {
-        user: this.props.currentUser,
+        currentUser: this.props.currentUser,
         users: [],
         userRef: firebase.database().ref("users"),
         connectedRef: firebase.database().ref(".info/connected"),
@@ -15,8 +15,8 @@ class DirectMessages extends Component {
     };
 
     componentDidMount() {
-        if (this.state.user) {
-            this.addListenter(this.state.user.uid);
+        if (this.state.currentUser) {
+            this.addListenter(this.state.currentUser.uid);
         }
     }
 
@@ -82,7 +82,8 @@ class DirectMessages extends Component {
     };
 
     getChannelId = (userId) => {
-        const currentUserId = this.state.user.uid;
+        const currentUserId = this.state.currentUser.uid;
+        console.log(currentUserId);
         return userId < currentUserId
             ? `${userId}/${currentUserId}`
             : `${currentUserId}/${userId}`;
