@@ -26,7 +26,7 @@ export class MeatPanel extends Component {
         num > 1 || num === 0 ? `${num} posts` : `${num} post`;
 
     displayTopPosters = (posts) => {
-        Object.entries(posts)
+        return Object.entries(posts)
             .sort((a, b) => b[1] - a[1])
             .map(([key, val], i) => (
                 <List.Item key={i}>
