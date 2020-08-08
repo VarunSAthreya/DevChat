@@ -11,11 +11,15 @@ import {
 } from "semantic-ui-react";
 import { SliderPicker } from "react-color";
 
+import firebase from "../../firebase";
+
 export class ColorPanel extends Component {
     state = {
         modal: false,
         primary: "",
         secondary: "",
+        user: this.props.currentUser,
+        userRef: firebase.database().ref("users"),
     };
 
     toggleModal = () => this.setState({ modal: !this.state.modal });
@@ -23,6 +27,27 @@ export class ColorPanel extends Component {
     handleChangePrimary = (color) => this.setState({ primary: color.hex });
 
     handleChangeSecondary = (color) => this.setState({ secondary: color.hex });
+
+    handleSaveColors = () => {
+        if (this.state.primary && this.state.secondary) {
+            this.saveColors(this.state.primary, this.state.secondary);
+        }
+    };
+
+    saveColors = (primary, secondary) => {
+        this.state.userRef
+            .child(`${this.state.user.uid}/colors`)
+            .push()
+            .update({
+                primary,
+                secondary,
+            })
+            .then(() => {
+                console.log("Colors Added");
+                this.toggleModal();
+            })
+            .catch((err) => console.error(err));
+    };
 
     render() {
         const { modal, primary, secondary } = this.state;
@@ -66,7 +91,11 @@ export class ColorPanel extends Component {
                         </Segment>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button color="green" inverted>
+                        <Button
+                            color="green"
+                            inverted
+                            onClick={this.handleSaveColors}
+                        >
                             <Icon name="checkmark" /> Save Colors
                         </Button>
 
