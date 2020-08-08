@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Segment, Accordion, Header, Icon } from "semantic-ui-react";
+import { Segment, Accordion, Header, Icon, Image } from "semantic-ui-react";
 
 export class MeatPanel extends Component {
     state = {
-        activeIndex: 0,
+        channel: this.props.currentChannel,
         privateChannel: this.props.isPrivateChannel,
+        activeIndex: 0,
     };
 
     setActiveIndex = (event, titleProp) => {
@@ -15,14 +16,14 @@ export class MeatPanel extends Component {
     };
 
     render() {
-        const { activeIndex, privateChannel } = this.state;
+        const { activeIndex, privateChannel, channel } = this.state;
 
         if (privateChannel) return null;
 
         return (
-            <Segment>
+            <Segment loading={!channel}>
                 <Header as="h3" attached="top">
-                    About # Channel
+                    About # {channel && channel.name}
                 </Header>
                 <Accordion styled attached="true">
                     <Accordion.Title
@@ -31,11 +32,11 @@ export class MeatPanel extends Component {
                         onClick={this.setActiveIndex}
                     >
                         <Icon name="dropdown" />
-                        <Icon namw="info" />
+                        <Icon name="info" />
                         Channel Details
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 0}>
-                        Details
+                        {channel && channel.details}
                     </Accordion.Content>
 
                     <Accordion.Title
@@ -44,7 +45,7 @@ export class MeatPanel extends Component {
                         onClick={this.setActiveIndex}
                     >
                         <Icon name="dropdown" />
-                        <Icon namw="user circle" />
+                        <Icon name="user circle" />
                         Top Posters
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 1}>
@@ -57,11 +58,17 @@ export class MeatPanel extends Component {
                         onClick={this.setActiveIndex}
                     >
                         <Icon name="dropdown" />
-                        <Icon namw="pencil alternate" />
+                        <Icon name="pencil alternate" />
                         Created By
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === 2}>
-                        creator
+                        <Header as="h3">
+                            <Image
+                                circular
+                                src={channel && channel.createdBy.avatar}
+                            />
+                            {channel && channel.createdBy.name}
+                        </Header>
                     </Accordion.Content>
                 </Accordion>
             </Segment>
