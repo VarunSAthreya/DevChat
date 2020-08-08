@@ -20,9 +20,9 @@ export class ColorPanel extends Component {
 
     toggleModal = () => this.setState({ modal: !this.state.modal });
 
-    handelChangePrimary = (color) => this.setState({ primary: color.hex });
+    handleChangePrimary = (color) => this.setState({ primary: color.hex });
 
-    handelChangeSecondary = (color) => this.setState({ secondary: color.hex });
+    handleChangeSecondary = (color) => this.setState({ secondary: color.hex });
 
     render() {
         const { modal, primary, secondary } = this.state;
@@ -53,7 +53,7 @@ export class ColorPanel extends Component {
                             <Label content="Primary Color" />
                             <SliderPicker
                                 color={primary}
-                                onChange={this.handelChangePrimary}
+                                onChange={this.handleChangePrimary}
                             />
                         </Segment>
 
@@ -61,7 +61,7 @@ export class ColorPanel extends Component {
                             <Label content="Secondary Color" />
                             <SliderPicker
                                 color={secondary}
-                                onChange={this.handelChangeSecondary}
+                                onChange={this.handleChangeSecondary}
                             />
                         </Segment>
                     </Modal.Content>
@@ -70,7 +70,7 @@ export class ColorPanel extends Component {
                             <Icon name="checkmark" /> Save Colors
                         </Button>
 
-                        <Button color="red" inverted onClic={this.toggleModal}>
+                        <Button color="red" inverted onClick={this.toggleModal}>
                             <Icon name="remove" /> Cancel
                         </Button>
                     </Modal.Actions>
