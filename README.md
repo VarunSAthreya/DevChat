@@ -1,5 +1,7 @@
 # DevChat
 
+[![CodeFactor](https://www.codefactor.io/repository/github/varunsathreya/devchat/badge)](https://www.codefactor.io/repository/github/varunsathreya/devchat)
+
 ## Built Using:
 
 -   [ReactJS](https://reactjs.org/)
