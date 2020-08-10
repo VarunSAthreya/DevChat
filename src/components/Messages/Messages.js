@@ -7,6 +7,7 @@ import MessagesForm from "./MessagesForm";
 import firebase from "../../firebase";
 import Message from "./Message";
 import { setUserPosts } from "../../actions";
+import Typing from "./Typing";
 // import Spinner from "../../Spinner";
 
 class Messages extends Component {
@@ -219,6 +220,9 @@ class Messages extends Component {
                         {searchTerm
                             ? this.displayMessages(searchResult)
                             : this.displayMessages(messages)}
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <span className="user__typing">i am typing</span>
+                        </div>
                     </Comment.Group>
                 </Segment>
 

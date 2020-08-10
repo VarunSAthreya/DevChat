@@ -178,7 +178,7 @@ export class MessagesForm extends Component {
                     fluid
                     name="message"
                     onChange={this.handleChange}
-                    onKeyDowm={this.handleKeyDown}
+                    onKeyDown={this.handleKeyDown}
                     value={message}
                     style={{ marginBottom: "0.7em" }}
                     label={<Button icon={"add"} />}
