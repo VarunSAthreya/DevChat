@@ -45,7 +45,7 @@ export class UserPanel extends Component {
     ];
 
     handleChange = (event) => {
-        const file = event.target.file[0];
+        const file = event.target.files[0];
         const reader = new FileReader();
 
         if (file) {
@@ -176,7 +176,7 @@ export class UserPanel extends Component {
                                     inverted
                                     onClick={this.toggleModal}
                                 >
-                                    <Icon name="review" /> Camcel
+                                    <Icon name="remove" /> Camcel
                                 </Button>
                             </Modal.Actions>
                         </Modal.Content>
