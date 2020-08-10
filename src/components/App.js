@@ -16,17 +16,19 @@ const App = ({
     primaryColor,
     secondaryColor,
 }) => (
-    <Grid columns="equal" className="app" style={{ background: "#eee" }}>
+    <Grid
+        columns="equal"
+        className="app"
+        style={{ background: secondaryColor }}
+    >
         <ColorPanel
             key={currentUser && currentUser.name}
             currentUser={currentUser}
         />
         <SidePanel
-
             key={currentUser && currentUser.uid}
             currentUser={currentUser}
             primaryColor={primaryColor}
-            
         />
 
         <Grid.Column style={{ marginLeft: 320 }}>
