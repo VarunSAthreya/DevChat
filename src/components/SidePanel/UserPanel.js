@@ -155,31 +155,31 @@ export class UserPanel extends Component {
                                     </Grid.Column>
                                 </Grid.Row>
                             </Grid>
-
-                            <Modal.Actions>
-                                {croppedImage && (
-                                    <Button color="green" inverted>
-                                        <Icon name="save" /> Change Avatar
-                                    </Button>
-                                )}
-
-                                <Button
-                                    color="green"
-                                    inverted
-                                    onClick={this.handleCropImage}
-                                >
-                                    <Icon name="image" /> Preview Avatar
-                                </Button>
-
-                                <Button
-                                    color="red"
-                                    inverted
-                                    onClick={this.toggleModal}
-                                >
-                                    <Icon name="remove" /> Camcel
-                                </Button>
-                            </Modal.Actions>
                         </Modal.Content>
+
+                        <Modal.Actions>
+                            {croppedImage && (
+                                <Button color="green" inverted>
+                                    <Icon name="save" /> Change Avatar
+                                </Button>
+                            )}
+
+                            <Button
+                                color="green"
+                                inverted
+                                onClick={this.handleCropImage}
+                            >
+                                <Icon name="image" /> Preview Avatar
+                            </Button>
+
+                            <Button
+                                color="red"
+                                inverted
+                                onClick={this.toggleModal}
+                            >
+                                <Icon name="remove" /> Camcel
+                            </Button>
+                        </Modal.Actions>
                     </Modal>
                 </Grid.Column>
             </Grid>
