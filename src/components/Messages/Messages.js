@@ -24,8 +24,11 @@ class Messages extends Component {
         searchResult: [],
         isChannelStarred: false,
         privateChannel: this.props.isPrivateChannel,
+        typingUsers: [],
         usersRef: firebase.database().ref("users"),
         privateMessagesRef: firebase.database().ref("privateMessages"),
+        typingRef: firebase.database().ref("typing"),
+        connectedRef: firebase.database().ref(".info/connected"),
     };
 
     componentWillMount() {
@@ -39,6 +42,47 @@ class Messages extends Component {
 
     addListners = (channelId) => {
         this.addMessageListner(channelId);
+        this.addTypingListeners(channelId);
+    };
+
+    addTypingListeners = (channelId) => {
+        let typingUsers = [];
+        this.state.typingRef.child(channelId).on("child_added", (snap) => {
+            if (snap.key !== this.state.user.uid) {
+                typingUsers = [
+                    ...typingUsers,
+                    {
+                        id: snap.key,
+                        name: snap.val(),
+                    },
+                ];
+                this.setState({ typingUsers });
+            }
+        });
+
+        this.state.typingRef.child(channelId).on("child_removed", (snap) => {
+            const index = typingUsers.findIndex((user) => user.id === snap.key);
+            if (index !== -1) {
+                typingUsers = typingUsers.filter(
+                    (user) => user.id !== snap.key
+                );
+                this.setState({ typingUsers });
+            }
+        });
+
+        this.state.connectedRef.on("value", (snap) => {
+            if (snap.val() === true) {
+                this.state.typingRef
+                    .child(channelId)
+                    .child(this.state.user.uid)
+                    .onDisconnect()
+                    .remove((err) => {
+                        if (err !== null) {
+                            console.error(err);
+                        }
+                    });
+            }
+        });
     };
 
     addMessageListner = (channelId) => {
@@ -184,6 +228,21 @@ class Messages extends Component {
             : ``;
     };
 
+    displayTypingUsers = (users) =>
+        users.length > 0 &&
+        users.map((user) => (
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "0.2em",
+                }}
+                key={user.id}
+            >
+                <span className="user__typing">{user.name} is typing</span>
+            </div>
+        ));
+
     render() {
         const {
             messagesRef,
@@ -197,6 +256,7 @@ class Messages extends Component {
             searchLoading,
             privateChannel,
             isChannelStarred,
+            typingUsers,
         } = this.state;
 
         return (
@@ -220,9 +280,7 @@ class Messages extends Component {
                         {searchTerm
                             ? this.displayMessages(searchResult)
                             : this.displayMessages(messages)}
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <span className="user__typing">i am typing</span>
-                        </div>
+                        {this.displayTypingUsers(typingUsers)}
                     </Comment.Group>
                 </Segment>
 
