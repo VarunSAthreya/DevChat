@@ -240,6 +240,7 @@ class Messages extends Component {
                 key={user.id}
             >
                 <span className="user__typing">{user.name} is typing</span>
+                <Typing />
             </div>
         ));
 
