@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Segment, Button, Input } from "semantic-ui-react";
 import { v4 as uuidv4 } from "uuid";
+import { Picker, emojiIndex } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 
 import firebase from "../../firebase";
 import FileModal from "./FileModal";
@@ -16,6 +18,7 @@ export class MessagesForm extends Component {
         modal: false,
         uploadState: "",
         uploadTask: null,
+        emojiPicker: false,
         storageRef: firebase.storage().ref(),
         typingRef: firebase.database().ref("typing"),
         percentUploaded: 0,
@@ -35,6 +38,10 @@ export class MessagesForm extends Component {
         } else {
             typingRef.child(channel.id).child(user.uid).remove();
         }
+    };
+
+    habdleTogglePicker = () => {
+        this.setState({ emojiPicker: !this.state.emojiPicker });
     };
 
     sendMessage = () => {
@@ -170,10 +177,19 @@ export class MessagesForm extends Component {
             modal,
             uploadState,
             percentUploaded,
+            emojiPicker,
         } = this.state;
 
         return (
             <Segment className="message__form">
+                {emojiPicker && (
+                    <Picker
+                        set="apple"
+                        className="emojipicker"
+                        title="Pick Your Emoji"
+                        emoji="point_up"
+                    />
+                )}
                 <Input
                     fluid
                     name="message"
@@ -181,7 +197,12 @@ export class MessagesForm extends Component {
                     onKeyDown={this.handleKeyDown}
                     value={message}
                     style={{ marginBottom: "0.7em" }}
-                    label={<Button icon={"add"} />}
+                    label={
+                        <Button
+                            icon={"add"}
+                            onClick={this.habdleTogglePicker}
+                        />
+                    }
                     labelPosition="left"
                     className={
                         errors.some((error) =>
