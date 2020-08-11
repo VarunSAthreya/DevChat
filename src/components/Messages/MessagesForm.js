@@ -44,6 +44,30 @@ export class MessagesForm extends Component {
         this.setState({ emojiPicker: !this.state.emojiPicker });
     };
 
+    handleAddemoji = (emoji) => {
+        const oldMessage = this.state.message;
+        const newMessage = this.colonToUnicode(
+            ` ${oldMessage} ${emoji.colons}`
+        );
+        this.setState({ message: newMessage, emojiPicker: false });
+        setTimeout(() => this.messageInput.focus(), 0);
+    };
+
+    colonToUnicode = (message) => {
+        return message.replace(/:[A-Za-z0-9_+-]+:/g, (x) => {
+            x = x.replace(/:/g, "");
+            let emoji = emojiIndex.emojis[x];
+            if (typeof emoji !== "undefined") {
+                let unicode = emoji.native;
+                if (typeof unicode !== "undefined") {
+                    return unicode;
+                }
+            }
+            x = ":" + x + ":";
+            return x;
+        });
+    };
+
     sendMessage = () => {
         const { getMessagesRef } = this.props;
 
@@ -185,6 +209,7 @@ export class MessagesForm extends Component {
                 {emojiPicker && (
                     <Picker
                         set="apple"
+                        onSelect={this.handleAddemoji}
                         className="emojipicker"
                         title="Pick Your Emoji"
                         emoji="point_up"
@@ -196,10 +221,12 @@ export class MessagesForm extends Component {
                     onChange={this.handleChange}
                     onKeyDown={this.handleKeyDown}
                     value={message}
+                    ref={(node) => (this.messageInput = node)}
                     style={{ marginBottom: "0.7em" }}
                     label={
                         <Button
-                            icon={"add"}
+                            icon={emojiPicker ? "close" : "add"}
+                            content={emojiPicker ? "Close" : null}
                             onClick={this.habdleTogglePicker}
                         />
                     }
