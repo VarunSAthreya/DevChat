@@ -24,6 +24,13 @@ export class MessagesForm extends Component {
         percentUploaded: 0,
     };
 
+    componentWillUnmount() {
+        if (this.state.uploadTask !== null) {
+            this.state.uploadTask.cancel();
+            this.setState({ uploadTask: null });
+        }
+    }
+
     toggleModal = () => this.setState({ modal: !this.state.modal });
 
     handleChange = (event) => {

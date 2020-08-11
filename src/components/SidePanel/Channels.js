@@ -40,6 +40,9 @@ export class Channels extends Component {
 
     removeListeners = () => {
         this.state.channelsRef.off();
+        this.state.channels.forEach((chanel) => {
+            this.state.messagesRef.child(chanel.id).off();
+        });
     };
 
     addListners = () => {
