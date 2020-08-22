@@ -15,6 +15,13 @@
 
 ##### `npm install`
 
+### Firebase Initialization
+
+**To initialize Firebase:**
+- Create a file named firebase.js in src.
+- Copy given code from firebase for web.
+- Import requried files from firebase package. 
+
 ### Available Scripts
 
 In the project directory, you can run:
