@@ -21,16 +21,22 @@ const App = ({
         className="app"
         style={{ background: secondaryColor }}
     >
-        <ColorPanel
-            key={currentUser && currentUser.name}
-            currentUser={currentUser}
-        />
+        <div className="hidden md:block">
+            <ColorPanel
+                key={currentUser && currentUser.name}
+                currentUser={currentUser}
+            />
+        </div>
+
+        {/* <div className="pl-20"> */}
         <SidePanel
             key={currentUser && currentUser.uid}
             currentUser={currentUser}
             primaryColor={primaryColor}
         />
+        {/* </div> */}
 
+        {/* <div className="w-full md:w-auto m-auto"> */}
         <Grid.Column style={{ marginLeft: 320 }}>
             <Messages
                 key={currentChannel && currentChannel.id}
@@ -39,15 +45,18 @@ const App = ({
                 isPrivateChannel={isPrivateChannel}
             />
         </Grid.Column>
+        {/* </div> */}
 
-        <Grid.Column width={4}>
-            <MeatPanel
-                key={currentChannel && currentChannel.name}
-                isPrivateChannel={isPrivateChannel}
-                currentChannel={currentChannel}
-                userPosts={userPosts}
-            />
-        </Grid.Column>
+        <div className="hidden lg:block mt-4" style={{ width: 300 }}>
+            <Grid.Column width={4}>
+                <MeatPanel
+                    key={currentChannel && currentChannel.name}
+                    isPrivateChannel={isPrivateChannel}
+                    currentChannel={currentChannel}
+                    userPosts={userPosts}
+                />
+            </Grid.Column>
+        </div>
     </Grid>
 );
 

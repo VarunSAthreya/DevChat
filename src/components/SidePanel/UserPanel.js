@@ -129,7 +129,7 @@ export class UserPanel extends Component {
         return (
             <Grid style={{ background: primaryColor }}>
                 <Grid.Column>
-                    <Grid.Row style={{ paddinf: "1.2em", margin: 0 }}>
+                    <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
                         {/* App Header */}
                         <Header inverted floated="left" as="h2">
                             <Icon name="code" />
