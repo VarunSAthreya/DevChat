@@ -31,3 +31,6 @@ database.rules.json
 firebase.json
 storage.rules
 .firebase/hosting.YnVpbGQ.cache
+
+# Generated Tailwind css
+src/components/App.css
