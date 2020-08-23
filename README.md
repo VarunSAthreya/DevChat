@@ -22,9 +22,16 @@
 - Copy given code from firebase for web.
 - Import requried files from firebase package. 
 
+
+
 ### Available Scripts
 
 In the project directory, you can run:
+
+##### `npm run buid-css`
+
+Used to output TailwindCSS and custom CSS classes.<br />
+Input file: **`src/tailwind/App.css`**, Output file: **`src/components/App.css`**.
 
 ##### `npm start`
 
