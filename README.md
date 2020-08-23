@@ -5,7 +5,7 @@
 ## Built Using:
 
 -   **[ReactJS](https://reactjs.org/)**
--   **[FireBase](https://firebase.google.com/)**
+-   **[Firebase](https://firebase.google.com/)**
 
 ## Getting Started
 
